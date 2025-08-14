@@ -12,7 +12,14 @@ env.config();
 const PORT = process.env.PORT || 5001;
 connectDB();
 
-app.use(cors());
+const corsOptions = {
+  origin: process.env.FRONT_END_URL, // Don't include /api
+  credentials: true, // If you're using cookies or auth headers
+  methods: ["GET", "POST", "PUT", "DELETE"], // Adjust as needed
+  allowedHeaders : ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
 
 // const __filename = fileURLToPath(import.meta.url);
 // const __filename = __filename || __filename;
@@ -28,7 +35,7 @@ app.use("/api", require("./router/question"));
 app.use("/api", require("./router/form"));
 app.use("/api", require("./router/user"));
 app.use("/api" , require("./router/role"))
-app.use(express.static(path.join(__dirname, "../goAudit_new_fe/dist")));
+// app.use(express.static(path.join(__dirname, "../goAudit_new_fe/dist")));
 
 
 // app.use("/api/user", require("./router/user"));
